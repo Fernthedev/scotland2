@@ -93,15 +93,21 @@ bool init(std::string_view modloaderFile) {
         break;
       }
     }
-    if (mainNamespace != nullptr) {
-      mprotect(reinterpret_cast<void*>(PAGE_START(reinterpret_cast<uintptr_t>(mainNamespace))), PAGE_SIZE,
-               PROT_READ | PROT_WRITE);
-      mainNamespace->set_isolated(false);
-    } else {
+    if (mainNamespace == nullptr) {
       LOG_ERROR("Failed to get modloader namespace");
       return false;
     }
+
+    mprotect(reinterpret_cast<void*>(PAGE_START(reinterpret_cast<uintptr_t>(mainNamespace))), PAGE_SIZE,
+             PROT_READ | PROT_WRITE);
+    mainNamespace->set_isolated(false);
     LOG_DEBUG("modloader namespace: {} {}", mainNamespace->get_name(), fmt::ptr(mainNamespace));
+
+    LOG_DEBUG("Logging library paths in namespace");
+
+    for (auto const& path : mainNamespace->get_ld_library_paths()) {
+      LOG_DEBUG("{}", path);
+    }
   }
   return true;
 }
