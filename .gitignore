@@ -1,3 +1,7 @@
+cmake*
+.idea/
+build_test
+
 # Prerequisites
 *.d
 

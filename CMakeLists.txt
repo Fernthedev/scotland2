@@ -101,6 +101,9 @@ if (${BUILD_FOR} STREQUAL LINUX)
 
     target_link_libraries(${testname} PRIVATE ${COMPILE_ID} -ldl)
 
+    # Add loader tests using CTest
+    add_subdirectory(tests)
+
 else()
     target_link_libraries(${COMPILE_ID} PRIVATE -llog -ldl)
 

@@ -2,7 +2,9 @@
 #pragma once
 
 // Exposed API functions
+#ifndef LINUX_TEST
 #include <jni.h>
+#endif
 #include <stdint.h>
 #include "_config.h"
 
@@ -88,7 +90,9 @@ typedef struct {
 /// @brief Returns true if the modloader failed to copy over the libs/mods to load, false otherwise
 MODLOADER_FUNC bool modloader_get_failed();
 /// @brief The captured pointer to the JavaVM
+#ifndef LINUX_TEST
 MODLOADER_EXPORT extern JavaVM* modloader_jvm;
+#endif
 /// @brief The captured dlopen-d libil2cpp.so handle
 MODLOADER_EXPORT extern void* modloader_libil2cpp_handle;
 /// @brief The captured dlopen-d libunity.so handle
